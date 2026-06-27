@@ -187,11 +187,14 @@
     position: relative;
     overflow: hidden;
     min-height: 85vh;
+    align-self: stretch;
   }
 
   .hero-image img {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
-    height: 50%;
+    height: 100%;
     object-fit: cover;
     object-position: center top;
     display: block;
@@ -563,13 +566,42 @@
     .hamburger { display: flex; }
     .mobile-menu { display: flex; }
 
-    #hero { grid-template-columns: 1fr; }
-    .hero-image { min-height: 100%; }
-    .hero-content { padding: 10px 10px; }
+    /* Hero stacks vertically */
+    #hero {
+      display: block;
+    }
+
+    /* Photo: exact screen width, portrait crop, zero overflow */
+    .hero-image {
+      width: 100%;
+      min-height: unset;
+      height: 72vw;
+      max-height: 420px;
+    }
+
+    .hero-image img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .stat { padding: 10px 12px; }
+    .stat-value { font-size: 16px; }
+    .stat-label { font-size: 11px; }
+
+    /* Content below the photo */
+    .hero-content {
+      padding: 32px 24px 40px;
+      gap: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 7vw, 38px);
+    }
 
     section { padding: 64px 24px; }
     .exp-card { padding: 28px 24px; }
-
     #connect-section { padding: 64px 24px; }
     footer { padding: 32px 24px; }
   }
@@ -620,9 +652,7 @@
 <!-- ═══ HERO ═══ -->
 <div id="hero">
   <div class="hero-image">
-    <div class="hero-placeholder">
-      <img src="Gopika_portfolio/1000024967.jpg" alt="Gopika PS">
-    </div>
+    <img src="Gopika_portfolio/1000024967.jpg" alt="Gopika PS">
 
     <div class="hero-stats">
       <div class="stat">
