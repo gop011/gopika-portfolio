@@ -87,6 +87,7 @@
   .nav-icons {
     display: flex;
     gap: 8px;
+    align-items: center;
   }
 
   .nav-icons a {
@@ -108,6 +109,72 @@
     transform: translateY(-2px);
   }
 
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    margin-left: 8px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    position: sticky;
+    top: 61px;
+    z-index: 99;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .mobile-menu.open {
+    max-height: 300px;
+  }
+
+  .mobile-menu a {
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .mobile-menu a:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-menu a:hover {
+    color: var(--text);
+    background: rgba(0,0,0,0.03);
+  }
+
   /* ─── HERO ─── */
   #hero {
     display: grid;
@@ -116,20 +183,20 @@
     align-items: center;
   }
 
-.hero-image{
+  .hero-image {
     position: relative;
     overflow: hidden;
     min-height: 85vh;
-}
+  }
 
-.hero-image img{
+  .hero-image img {
     width: 100%;
     height: 50%;
-    object-fit: cover;      /* Fills the entire left section */
-    object-position: center top; /* Change to center if needed */
+    object-fit: cover;
+    object-position: center top;
     display: block;
     filter: grayscale(1);
-}
+  }
 
   .hero-stats {
     position: absolute;
@@ -204,8 +271,6 @@
     letter-spacing: -0.01em;
   }
 
-
-
   .hero-desc {
     font-size: 14px;
     color: var(--text-muted);
@@ -244,7 +309,9 @@
     margin: 0 auto;
     border-top: 1px solid rgba(0,0,0,0.12);
   }
-   #about { border-top: none; }
+
+  #about { border-top: none; }
+
   .section-title {
     font-family: var(--serif);
     font-size: clamp(28px, 4vw, 52px);
@@ -292,7 +359,6 @@
     transform: scale(1) translateY(0);
   }
 
-  /* stagger children */
   .cards-grid .reveal:nth-child(1) { transition-delay: 0s; }
   .cards-grid .reveal:nth-child(2) { transition-delay: 0.08s; }
   .cards-grid .reveal:nth-child(3) { transition-delay: 0.16s; }
@@ -400,7 +466,6 @@
     background: #6b6660;
     color: #fff;
     padding: 96px 48px;
-    
   }
 
   #connect-section .section-title {
@@ -495,6 +560,8 @@
   @media (max-width: 900px) {
     nav { padding: 14px 24px; }
     .nav-center { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
 
     #hero { grid-template-columns: 1fr; }
     .hero-image { min-height: 100%; }
@@ -532,17 +599,30 @@
     <a href="mailto:gopikaps011@gmail.com" title="Email">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
     </a>
+    <!-- Hamburger button — visible only on mobile -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile dropdown menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#skills" onclick="closeNav()">Skills</a>
+  <a href="#projects" onclick="closeNav()">Projects</a>
+  <a href="#certificates" onclick="closeNav()">Certificates</a>
+  <a href="#experience" onclick="closeNav()">Experience</a>
+</div>
 
 <!-- ═══ HERO ═══ -->
 <div id="hero">
   <div class="hero-image">
-    <!-- TO ADD YOUR PHOTO: replace the div below with:
-         <img src="your-photo.jpg" alt="Gopika PS"> -->
     <div class="hero-placeholder">
-    <img src="Gopika_portfolio/1000024967.jpg" alt="Gopika PS">
-</div>
+      <img src="Gopika_portfolio/1000024967.jpg" alt="Gopika PS">
+    </div>
 
     <div class="hero-stats">
       <div class="stat">
@@ -561,7 +641,6 @@
   </div>
 
   <div class="hero-content">
-    <!-- ROTATING TITLE -->
     <div class="hero-eyebrow">
       <div class="eyebrow-inner" id="eyebrow">
         <span>FPGA Designer</span>
@@ -577,9 +656,6 @@
       Passionate about Analog VLSI, Analog Layout Design, Physical Verification, FPGA Design and Embedded Systems.
     </h4>
 
-  
-
-    <!-- RESUME BUTTON — replace href with your actual resume PDF link -->
     <a href="Gopika_portfolio/Gopika Resume.pdf" target="_blank" class="hero-resume-btn">
       Resume
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
@@ -734,6 +810,19 @@
   }, { threshold: 0.15 });
 
   reveals.forEach(el => observer.observe(el));
+
+  // ── 3. HAMBURGER MENU ──
+  function toggleNav() {
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('mobileMenu');
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  }
+
+  function closeNav() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
 </script>
 </body>
 </html>
