@@ -601,7 +601,7 @@
 <!-- ═══ HERO ═══ -->
 <div id="hero">
   <div class="hero-image">
-   <img src="./photo.jpg" alt="Gopika PS">
+    <img src="photo.jpg" alt="Gopika PS" onerror="var f=['Gopika_portfolio/photo.jpg','https://raw.githubusercontent.com/gop011/gopika-portfolio/main/photo.jpg'];var i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.onerror=null;}">
     <div class="hero-stats">
       <div class="stat">
         <span class="stat-value">9.11</span>
@@ -638,7 +638,7 @@
       Passionate about Analog VLSI, Analog Layout Design, Physical Verification, FPGA Design and Embedded Systems.
     </p>
 
-    <a href="./resume.pdf" target="_blank" class="hero-resume-btn">
+    <a href="resume.pdf" id="resume-btn" target="_blank" rel="noopener" class="hero-resume-btn">
       Resume
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
     </a>
@@ -807,6 +807,14 @@
   }, { threshold: 0.12 });
 
   reveals.forEach(el => observer.observe(el));
+
+  // ── RESUME FALLBACK: if resume.pdf is missing on the site, open the GitHub preview ──
+  fetch('resume.pdf', {method:'HEAD'}).then(r => {
+    if (r.status === 404) {
+      document.getElementById('resume-btn').href =
+        'https://github.com/gop011/gopika-portfolio/blob/main/resume.pdf';
+    }
+  }).catch(() => {});
 </script>
 </body>
 </html>
